@@ -1,0 +1,91 @@
+/* Name: Priti Rangnekar
+ 
+ Grade: 12th
+ ACSL 2019-2020 Contest #1
+ Senior Division
+ Date: 2019-12-08
+*/
+import java.io.*;
+import java.util.*;
+public class acsldec19pritirangnekarsubmission{
+  public static void main(String[] args){
+    Scanner sc = new Scanner(System.in);
+    for (int t = 0; t<5; t++){ //loop since there's 5 test cases
+      String s = sc.next();
+      int p = sc.nextInt();
+      //code to populate int digit array
+      int[] arr = new int[s.length()];
+      for (int i = 0; i<s.length(); i++){
+        arr[i] = Integer.parseInt(s.substring(i, i+1));
+      }
+      //code to find count - first convert to long, then find count of prime factors for that long
+      Long longnum = Long.parseLong(s);
+      int count = findprimefactors(longnum);
+      //replacing and printing code
+      replace(arr, count, p);
+      System.out.print(t+1 + ". ");
+      for (int i = 0; i<arr.length; i++){
+        System.out.print(arr[i]);
+      }
+      System.out.println();
+    }
+    
+  }
+  
+  public static void replace(int[] arr, int count, int p){
+    int index  = arr.length-p;
+    int pthdigit = arr[index];
+    arr[index] = count;
+    for (int i=0; i<index; i++){
+      arr[i] = arr[i]+pthdigit;
+    }
+    for (int i=index+1; i<arr.length; i++){
+      arr[i] = Math.abs(arr[i]-pthdigit);
+    }
+  }
+  
+  public static int findprimefactors(long num) {
+        Set<Long> pf = new TreeSet<>();
+        for (long i = 2; i <= num / i; i++) {
+            while (num % i == 0) {
+                pf.add(i);
+                num /= i;
+            }
+        }
+        if (num > 1) {
+            pf.add(num);
+        }
+        return pf.size();
+    }
+}
+
+
+
+/* Sample Input (all worked)
+102438 3
+4329 1
+6710 2
+16807 1
+60098065452 7
+SAMPLE OUTPUT:
+1. 546414
+2. 1312113
+3. 7841
+4. 8131571
+5. 1488173823436
+*/ 
+
+/*Test input (all worked)
+43287 3
+72431685 1
+246897531573 12
+96783 5
+16058314729 3
+
+TEST OUTPUT:
+1. 65365
+2. 12798611133
+3. 424675311351
+4. 23216
+5. 8137121510811152
+*/
